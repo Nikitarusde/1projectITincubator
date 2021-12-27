@@ -42,6 +42,9 @@ function App() {
         // const copyState = [newTask,...tasks]
         // setTasks(copyState)
     }
+    const changeTaskStatus = (id: string, isDone: boolean) => {
+        setTasks(tasks.map(t => t.id === id ? {...t, isDone} : t))
+    }
 
     let getTasksForRender = tasks;
     if (filter === "active") {
@@ -62,6 +65,7 @@ function App() {
                 removeTask={removeTask}
                 changeFilter={changeFilter}
                 addTask={addTask}
+                changeTaskStatus={changeTaskStatus}
             />
         </div>
     )
