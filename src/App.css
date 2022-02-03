@@ -1,8 +1,7 @@
+/*
 .App {
   padding: 30px;
-}
-.itemForm{
-  margin: 20px;
+  display: flex;
 }
 
 .App > div {
@@ -24,7 +23,4 @@
 .is-done {
   opacity: 0.5;
 }
-
-.button{
-  margin: 20px;
-}
+*/

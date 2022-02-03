@@ -2,12 +2,8 @@ import React, {ChangeEvent} from 'react';
 import {FilterValuesType} from './App';
 import {AddItemForm} from './AddItemForm';
 import {EditableSpan} from './EditableSpan';
-import {Button, Checkbox, IconButton} from "@mui/material";
-import {BootstrapButton} from "./UI/Button";
-import {pink} from "@mui/material/colors";
-import DeleteIcon from "@mui/material/Icon"
-import AccessibleForwardIcon from '@mui/icons-material/AccessibleForward';
-
+import {Button, Checkbox, IconButton} from '@material-ui/core';
+import {Delete} from '@material-ui/icons';
 
 export type TaskType = {
     id: string
@@ -46,15 +42,13 @@ export function Todolist(props: PropsType) {
     const onCompletedClickHandler = () => props.changeFilter("completed", props.id);
 
     return <div>
-        <h3><EditableSpan value={props.title} onChange={changeTodolistTitle}/>
-
-
-            <IconButton aria-label="delete" onClick={removeTodolist}>
-                <AccessibleForwardIcon fontSize="inherit" sx={{color: pink[500]}}/>
+        <h3> <EditableSpan value={props.title} onChange={changeTodolistTitle} />
+            <IconButton onClick={removeTodolist}>
+                <Delete />
             </IconButton>
         </h3>
         <AddItemForm addItem={addTask}/>
-        <ul>
+        <div>
             {
                 props.tasks.map(t => {
                     const onClickHandler = () => props.removeTask(t.id, props.id)
@@ -67,32 +61,35 @@ export function Todolist(props: PropsType) {
                     }
 
 
-                    return <li key={t.id} className={t.isDone ? "is-done" : ""}>
-                        <Checkbox defaultChecked
-                                  sx={{
-                                      color: pink[800],
-                                      '&.Mui-checked': {
-                                          color: pink[600],
-                                      },
-                                  }}
-                                  onChange={onChangeHandler}
-                                  checked={t.isDone}/>
-                        <EditableSpan value={t.title} onChange={onTitleChangeHandler}/>
-                        <BootstrapButton variant="contained" onClick={onClickHandler}>X</BootstrapButton>
-                    </li>
+                    return <div key={t.id} className={t.isDone ? "is-done" : ""}>
+                        <Checkbox
+                            checked={t.isDone}
+                            color="primary"
+                            onChange={onChangeHandler}
+                        />
+
+                        <EditableSpan value={t.title} onChange={onTitleChangeHandler} />
+                        <IconButton onClick={onClickHandler}>
+                            <Delete />
+                        </IconButton>
+                    </div>
                 })
             }
-        </ul>
+        </div>
         <div>
-            <BootstrapButton variant="contained" className={props.filter === 'all' ? "active-filter" : ""}
-                             onClick={onAllClickHandler}>All
-            </BootstrapButton>
-            <BootstrapButton variant="contained" className={props.filter === 'active' ? "active-filter" : ""}
-                             onClick={onActiveClickHandler}>Active
-            </BootstrapButton>
-            <BootstrapButton variant="contained" className={props.filter === 'completed' ? "active-filter" : ""}
-                             onClick={onCompletedClickHandler}>Completed
-            </BootstrapButton>
+            <Button variant={props.filter === 'all' ? 'outlined' : 'text'}
+                    onClick={onAllClickHandler}
+                    color={'default'}
+            >All
+            </Button>
+            <Button variant={props.filter === 'active' ? 'outlined' : 'text'}
+                    onClick={onActiveClickHandler}
+                    color={'primary'}>Active
+            </Button>
+            <Button variant={props.filter === 'completed' ? 'outlined' : 'text'}
+                    onClick={onCompletedClickHandler}
+                    color={'secondary'}>Completed
+            </Button>
         </div>
     </div>
 }
